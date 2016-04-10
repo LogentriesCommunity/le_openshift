@@ -504,12 +504,14 @@ def daemonize():
     If not then it daemonizes itself, otherwise it dies.
     """
     if not _lock_pid():
-        die("Daemon already running. If you are sure it isn't please remove %s" %
+        log.warning("Daemon already running. If you are sure it isn't please remove %s" %
             _lock_pid_file_name())
+        sys.exit(EXIT_OK)
     err = _try_daemonize()
     _unlock_pid()
     if err:
-        die("%s" % err)
+        log.warning("%s" % err)
+        sys.exit(EXIT_OK)
 
     # Setting the proctitle
     set_proc_title('logentries-daemon')
