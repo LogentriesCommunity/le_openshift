@@ -9,6 +9,7 @@
 #
 # Constants
 #
+import os
 
 from utils import *
 from __init__ import __version__
@@ -29,8 +30,8 @@ CONF_SUFFIX = '.conf' # Expected suffix of configuration files
 
 LOCAL_CONFIG_DIR_USER = '.le'
 LOCAL_CONFIG_DIR_SYSTEM = '/etc/le'
-
-PID_FILE = '/var/run/logentries.pid'
+OPENSHIFT_DATA_DIR = os.getenv('OPENSHIFT_DATA_DIR')
+PID_FILE = OPENSHIFT_DATA_DIR + 'logentries.pid'
 
 MAIN_SECT = 'Main'
 USER_KEY_PARAM = 'user-key'
@@ -2070,9 +2071,8 @@ class Config(object):
         Identifies a configuration directory for the current user.
         Always terminated with slash.
         """
-        if os.geteuid() == 0:
-            # Running as root
-            c_dir = CONFIG_DIR_SYSTEM
+        if os.name == "posix":
+			c_dir = OPENSHIFT_DATA_DIR
         else:
             # Running as an ordinary user
             c_dir = os.path.expanduser('~') + '/' + CONFIG_DIR_USER
