@@ -1,8 +1,7 @@
 Logentries on OpenShift
 ======================
 
-*This plug in will no longer be officially supported or maintained by Logentries.<br>
-If you would be interested in maintaining this project, please contact support@logentries.com.*
+*This plug in will no longer be officially supported or maintained by Logentries.<br>*
 
 This git repo provides a quick method to get your OpenShift logs streaming to Logentries.
 
